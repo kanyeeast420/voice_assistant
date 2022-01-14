@@ -1,10 +1,6 @@
 import speech_recognition as sr
-import os
-import webbrowser
 import Utils
-import wikipedia
 import pyttsx3
-from time import sleep
 
 
 # initialize AI Voice
