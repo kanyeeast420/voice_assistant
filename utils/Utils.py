@@ -26,14 +26,20 @@ load_dotenv()
 # initialize Genius Lyrics
 genius = lyricsgenius.Genius(os.getenv("GENIUS_ACCESS_TOKEN"))
 
+# announce any action
+
+
+def callAction(call):
+    engine.say(call)
+    engine.runAndWait()
+
+
 # open new browser tab with url
 
 
 def openURL(url):
-
     # announce action
-    engine.say("Openning {0}".format(url))
-    engine.runAndWait()
+    callAction("Openning {0}".format(url))
 
     # open browser
     sleep(1)
@@ -44,7 +50,7 @@ def openURL(url):
 
 def searchWiki(query):
     # announce action
-    engine.say("Searching wiki for {0}".format(query))
+    callAction("Searching wiki for {0}".format(query))
 
     # search wikipedia api for summary
     page = wikipedia.page(query)
@@ -56,8 +62,7 @@ def searchWiki(query):
 
 def get_repositories_from_organization(org):
     # announce action
-    engine.say("Searching Github repositories from {0}".format(org))
-    engine.runAndWait()
+    callAction("Searching Github repositories from {0}".format(org))
 
     # search api for repositories
     url = "https://api.github.com/orgs/" + org + "/repos"
@@ -71,16 +76,15 @@ def get_repositories_from_organization(org):
 
 def calculate(query, operator):
     # announce action
-    engine.say("Calculating {0}".format(query))
-    engine.runAndWait()
+    callAction("Calculating {0}".format(query))
+
 
 # get the lyrics of a song with artist
 
 
 def getLyrics(song, artist):
     # announce action
-    engine.say("Displaying lyrics for {0}".format(song))
-    engine.runAndWait()
+    callAction("Displaying lyrics for {0}".format(song))
 
     # find lyrics
     lyrics = genius.search_song(song, artist)
@@ -90,6 +94,9 @@ def getLyrics(song, artist):
 
 
 def getTopStocks(query):
+    # announce action
+    callAction("Fetching latest crypt")
+
     url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
 
     headers = {
