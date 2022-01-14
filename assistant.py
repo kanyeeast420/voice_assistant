@@ -20,8 +20,8 @@ class assistant():
             recognizer.adjust_for_ambient_noise(source, duration=1)
 
             # record microphone for 5 seconds
-            print(bg.blue + "Recording for 5 seconds" + bg.rs)
-            recorded_audio = recognizer.listen(source, timeout=5)
+            print(bg.blue + "Recording for 7 seconds" + bg.rs)
+            recorded_audio = recognizer.listen(source, timeout=7)
 
         try:
             # convert audio in to str
