@@ -53,13 +53,28 @@ class assistant():
             output = recognizer.recognize_google(
                 recorded_audio, language=selectedLang)
 
-            # announce action
-            engine.say("Openning {0}".format(output))
-            engine.runAndWait()
+            # search for keywords
+            if "open" in output:
+                with sr.Microphone() as opensrc:
+                   print("Adjusting noise")
+                   recognizer.adjust_for_ambiet_noise(opensrc, duration=1)
+                   
+                   print("Recording for 5 seconds")
+                   recorded_open = recognizer.listen(source, timeout=5)
+                   print("Done recording")
+                    
+             try:
+                output = recognizer.recognize_google(recorded_open, language=selectedLang)
+                # announce action
+                engine.say("Openning {0}".format(output))
+                engine.runAndWait()
 
-            # open browser
-            sleep(1)
-            webbrowser.open_new_tab("https://{0}/".format(output))
+                # open browser
+                sleep(1)
+                webbrowser.open_new_tab("https://{0}/".format(output))
+                
+            
+          
 
         except Exception as ex:
             print(ex)
