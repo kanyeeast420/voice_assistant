@@ -9,6 +9,7 @@ import os
 from sty import fg, bg, ef, rs
 import lyricsgenius
 from dotenv import load_dotenv
+import requests
 
 # initialize AI Voice
 engine = pyttsx3.init()
@@ -79,6 +80,28 @@ def getLyrics(song, artist):
     print(lyrics.lyrics)
 
 
+def getTopStocks(query):
+    url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
+
+    headers = {
+        "X-CMC_PRO_API_KEY": os.getenv("COIN_MARKET_CAP_TOKEN"),
+        "Accepts": "application/json"
+    }
+
+    params = {
+        "start": "1",
+        "limit": "10",
+        "convert": "EUR"
+    }
+
+    json = requests.get(url, params=params, headers=headers).json()
+
+    coins = json["data"]
+
+    for i in coins:
+        print(i["symbol"], i["quote"]["EUR"]["price"])
+
+
 # actions for assistant
 def functions(output):
     if "open" in output:
@@ -98,3 +121,7 @@ def functions(output):
         end = meta.split(" by ")
         print(bg.blue + str(end) + bg.rs + "\n\n")
         getLyrics(song=str(end[0]), artist=str(end[1]))
+
+    if "get the latest crypto" in output:
+        value = str(output).replace("get the latest crypto ", "")
+        getTopStocks(query=value)
