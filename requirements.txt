@@ -2,7 +2,6 @@ speechrecognition
 pyttsx3
 sty
 wikipedia
-json
 urllib
 lyricsgenius
 python-dotenv
