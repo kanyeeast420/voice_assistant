@@ -3,6 +3,12 @@ import webbrowser
 import wikipedia
 import pyttsx3
 from time import sleep
+import urllib.request
+import json
+import os
+from sty import fg, bg, ef, rs
+import lyricsgenius
+from dotenv import load_dotenv
 
 # initialize AI Voice
 engine = pyttsx3.init()
@@ -10,7 +16,15 @@ engine = pyttsx3.init()
 # initialize Recorder
 recognizer = sr.Recognizer()
 
-# open url in new tab
+# System call
+os.system("")
+
+# enviroment variables
+load_dotenv()
+
+
+# initialize Genius Lyrics
+genius = lyricsgenius.Genius(os.getenv("GENIUS_ACCESS_TOKEN"))
 
 
 def openURL(url):
@@ -25,5 +39,62 @@ def openURL(url):
 
 
 def searchWiki(query):
+    # announce action
+    engine.say("Searching wiki for {0}".format(query))
+
+    # search wikipedia api for summary
     page = wikipedia.page(query)
-    print("\n" + page.title + " - " + page.url + "\n\n" + page.summary)
+    print("\n" + bg.blue + page.title + bg.rs +
+          " - " + page.url + "\n\n" + page.summary)
+
+
+def get_repositories_from_organization(org):
+    # announce action
+    engine.say("Searching Github repositories from {0}".format(org))
+    engine.runAndWait()
+
+    # search api for repositories
+    url = "https://api.github.com/orgs/" + org + "/repos"
+    request = urllib.request.Request(url)
+    response = urllib.request.urlopen(request)
+    data = json.loads(response.read().decode())
+    print([repo["name"] for repo in data])
+
+
+def calculate(query, operator):
+    # announce action
+    engine.say("Calculating {0}".format(query))
+    engine.runAndWait()
+
+    # calculate
+
+
+def getLyrics(song, artist):
+    # announce action
+    engine.say("Displaying lyrics for {0}".format(song))
+    engine.runAndWait()
+
+    # find lyrics
+    lyrics = genius.search_song(song, artist)
+    print(lyrics.lyrics)
+
+
+# actions for assistant
+def functions(output):
+    if "open" in output:
+        url = str(output).replace("open ", "")
+        openURL(url=url)
+
+    if "what is" in output:
+        query = str(output).replace("what is ", "")
+        searchWiki(query=query)
+
+    if "get repositories" in output:
+        orga = str(output).replace("get repositories ", "")
+        get_repositories_from_organization(org=orga)
+
+    if "get lyrics" in output:
+        meta = str(output).replace("get lyrics ", "")
+        end = meta.split(" by ")
+        print(bg.blue + str(end) + bg.rs + "\n\n")
+        getLyrics(song=str(end[0]), artist=str(end[1]))

@@ -1,6 +1,7 @@
 import speech_recognition as sr
 import Utils
 import pyttsx3
+from sty import bg, fg
 
 
 # initialize AI Voice
@@ -47,14 +48,10 @@ class assistant():
             output = recognizer.recognize_google(
                 recorded_audio, language="en-US")
 
-            # functions
-            if "open" in output:
-                url = str(output).replace("open ", "")
-                Utils.openURL(url=url)
+            print("\n" + bg.green + fg.black + output + bg.rs + fg.rs + "\n")
 
-            if "search" in output:
-                query = str(output).replace("search ", "")
-                Utils.searchWiki(query=query)
+            # functions
+            Utils.functions(output=output)
 
         except Exception as ex:
             print(ex)
