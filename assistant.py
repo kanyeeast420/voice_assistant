@@ -16,21 +16,20 @@ class assistant():
     def speechToText():
 
         with sr.Microphone() as source:
-            print("Adjusting noise...")
+            print(bg.blue + "Adjusting noise..." + bg.rs)
             recognizer.adjust_for_ambient_noise(source, duration=1)
 
             # record microphone for 5 seconds
-            print("Recording for 5 seconds")
+            print(bg.blue + "Recording for 5 seconds" + bg.rs)
             recorded_audio = recognizer.listen(source, timeout=5)
-            print("Done recording\n")
 
         try:
-            # convert to text
-            print("Recognizing text\n")
+            # convert audio in to str
             output = recognizer.recognize_google(
                 recorded_audio, language="en-US")
 
-            print("\n" + bg.green + fg.black + output + bg.rs + fg.rs + "\n")
+            print("\n" + "recognized audio: " +
+                  bg.green + fg.black + output + bg.rs + fg.rs + "\n")
 
             # functions
             Utils.functions(output=output)

@@ -26,6 +26,8 @@ load_dotenv()
 # initialize Genius Lyrics
 genius = lyricsgenius.Genius(os.getenv("GENIUS_ACCESS_TOKEN"))
 
+# open new browser tab with url
+
 
 def openURL(url):
 
@@ -37,6 +39,8 @@ def openURL(url):
     sleep(1)
     webbrowser.open_new_tab("https://{0}/".format(url))
 
+# get a wikipedia page summary by query
+
 
 def searchWiki(query):
     # announce action
@@ -46,6 +50,8 @@ def searchWiki(query):
     page = wikipedia.page(query)
     print("\n" + bg.blue + page.title + bg.rs +
           " - " + page.url + "\n\n" + page.summary)
+
+# search github api for all repos of a specific org
 
 
 def get_repositories_from_organization(org):
@@ -60,11 +66,15 @@ def get_repositories_from_organization(org):
     data = json.loads(response.read().decode())
     print([repo["name"] for repo in data])
 
+# calculate math problem
+
 
 def calculate(query, operator):
     # announce action
     engine.say("Calculating {0}".format(query))
     engine.runAndWait()
+
+# get the lyrics of a song with artist
 
 
 def getLyrics(song, artist):
@@ -75,6 +85,8 @@ def getLyrics(song, artist):
     # find lyrics
     lyrics = genius.search_song(song, artist)
     print(lyrics.lyrics)
+
+# get the top stocks from api
 
 
 def getTopStocks(query):
@@ -100,6 +112,8 @@ def getTopStocks(query):
 
 
 # actions for assistant
+
+
 def functions(output):
     if "open" in output:
         url = str(output).replace("open ", "")
