@@ -23,7 +23,6 @@ os.system("")
 # enviroment variables
 load_dotenv()
 
-
 # initialize Genius Lyrics
 genius = lyricsgenius.Genius(os.getenv("GENIUS_ACCESS_TOKEN"))
 
@@ -66,8 +65,6 @@ def calculate(query, operator):
     # announce action
     engine.say("Calculating {0}".format(query))
     engine.runAndWait()
-
-    # calculate
 
 
 def getLyrics(song, artist):

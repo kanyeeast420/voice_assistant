@@ -1,5 +1,5 @@
 import speech_recognition as sr
-import Utils
+import utils.Utils as Utils
 import pyttsx3
 from sty import bg, fg
 
@@ -9,24 +9,6 @@ engine = pyttsx3.init()
 
 # initialize Recorder
 recognizer = sr.Recognizer()
-
-# # language selection
-# languages = ["en-US", "de-DE", "fr-FR"]
-# selectedLang = []
-
-# # show avaliable languages
-# for i in range(len(languages)):
-#     print(str(i+1) + ":",  languages[i])
-
-# # select languages
-# inp = int(input("\nEnter a number: "))
-# if inp in range(1, 4):
-#     inp = languages[inp-1]
-#     print("\nSelected language: {0}\n".format(inp))
-#     selectedLang = str(inp)
-
-# else:
-#     print("Invalid input")
 
 
 class assistant():
