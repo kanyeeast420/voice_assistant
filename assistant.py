@@ -13,7 +13,7 @@ recognizer = sr.Recognizer()
 
 class assistant():
 
-    def speechToText():
+    def go():
 
         with sr.Microphone() as source:
             print(bg.blue + "Adjusting noise..." + bg.rs)
@@ -38,4 +38,4 @@ class assistant():
             print(ex)
 
 
-assistant.speechToText()
+assistant.go()
