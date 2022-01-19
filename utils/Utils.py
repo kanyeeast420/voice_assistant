@@ -10,6 +10,9 @@ from sty import fg, bg, ef, rs
 import lyricsgenius
 from dotenv import load_dotenv
 import requests
+import string
+import random
+import pyperclip
 
 # initialize AI Voice
 engine = pyttsx3.init()
@@ -118,6 +121,29 @@ def getTopStocks(query):
         print(i["symbol"], i["quote"]["EUR"]["price"])
 
 
+def generatePsw(length):
+    # announce action
+    callAction("Generating password")
+
+    characters = list(string.ascii_letters + string.digits + "!@#$%^&*()")
+
+    # generate psw
+    random.shuffle(characters)
+
+    password = []
+
+    for i in range(length):
+        password.append(random.choice(characters))
+
+    random.shuffle(password)
+
+    print(bg.blue + "{0}".format("".join(password)) + bg.rs)
+
+    callAction("Generated password: {0}".format("".join(password)))
+
+    pyperclip.copy("".join(password))
+    callAction("\ncopied to clipboard")
+
 # actions for assistant
 
 
@@ -143,3 +169,8 @@ def functions(output):
     if "get the latest crypto" in output:
         value = str(output).replace("get the latest crypto ", "")
         getTopStocks(query=value)
+
+    if "generate password digits" in output:
+        data = str(output).replace("generate password digits ", "")
+        length = int(data)
+        generatePsw(length=length)

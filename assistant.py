@@ -31,6 +31,8 @@ class assistant():
             print("\n" + "recognized audio: " +
                   bg.green + fg.black + output + bg.rs + fg.rs + "\n")
 
+            # create log request
+
             # functions
             Utils.functions(output=output)
 
