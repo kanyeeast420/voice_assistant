@@ -36,6 +36,11 @@ def callAction(call):
     engine.say(call)
     engine.runAndWait()
 
+# open browser
+
+
+def openBrowser(url):
+    webbrowser.open_new_tab("https://{0}/".format(url))
 
 # open new browser tab with url
 
@@ -46,7 +51,7 @@ def openURL(url):
 
     # open browser
     sleep(1)
-    webbrowser.open_new_tab("https://{0}/".format(url))
+    openBrowser(url=url)
 
 # get a wikipedia page summary by query
 
@@ -120,6 +125,8 @@ def getTopStocks(query):
     for i in coins:
         print(i["symbol"], i["quote"]["EUR"]["price"])
 
+# generate custom password with length
+
 
 def generatePsw(length):
     # announce action
@@ -143,6 +150,17 @@ def generatePsw(length):
 
     pyperclip.copy("".join(password))
     callAction("\ncopied to clipboard")
+
+# search google for anything
+
+
+def searchGoogle(searchQuery):
+    callAction("Search google for {0}".format(searchQuery))
+
+    url = "www.google.com/search?q={0}/".format(searchQuery)
+
+    sleep(1)
+    openBrowser(url=url)
 
 # actions for assistant
 
@@ -174,3 +192,7 @@ def functions(output):
         data = str(output).replace("generate password digits ", "")
         length = int(data)
         generatePsw(length=length)
+
+    if "Google" in output:
+        searchQuery = str(output).replace("Google ", "")
+        searchGoogle(searchQuery=searchQuery)
