@@ -13,7 +13,7 @@ import requests
 import string
 import random
 import pyperclip
-import logging
+import pywikibot
 
 # initialize AI Voice
 engine = pyttsx3.init()
