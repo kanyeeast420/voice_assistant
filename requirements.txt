@@ -4,3 +4,4 @@ sty
 wikipedia
 lyricsgenius
 python-dotenv
+pyperclip
