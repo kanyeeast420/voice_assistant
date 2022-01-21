@@ -13,6 +13,7 @@ import requests
 import string
 import random
 import pyperclip
+import logging
 
 # initialize AI Voice
 engine = pyttsx3.init()
@@ -171,27 +172,27 @@ def commands(output):
         case "open":
             url = str(output).replace("open ", "")
             openURL(url=url)
-            return "Success"
+            return "open"
 
         case "what":
             match output.split(" ")[1]:
                 case "is" | "are":
                     query = str(output).replace("what is ", "")
                     searchWiki(query=query)
-                    return "Success"
+                    return "what is/are"
 
         case "get":
             match output.split(" ")[1]:
                 case "repositories":
                     orga = str(output).replace("get repositories ", "")
                     get_repositories_from_organization(org=orga)
-                    return "Success"
+                    return "get repositories"
                 case "lyrics":
                     meta = str(output).replace("get lyrics ", "")
                     end = meta.split(" by ")
                     print(bg.blue + str(end) + bg.rs + "\n\n")
                     getLyrics(song=str(end[0]), artist=str(end[1]))
-                    return "Success"
+                    return "get lyrics"
 
         case "generate":
             match output.split(" ")[1]:
@@ -202,12 +203,12 @@ def commands(output):
                                 "generate password digits ", "")
                             length = int(data)
                             generatePsw(length=length)
-                            return "Success"
+                            return "generate password"
 
         case "Google":
             searchQuery = str(output).replace("Google ", "")
             searchGoogle(searchQuery=searchQuery)
-            return "Success"
+            return "google"
 
     sleep(1)
     callAction("Please repeat, couldn't recognize a command")

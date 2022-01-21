@@ -1,7 +1,9 @@
+from fileinput import filename
 import speech_recognition as sr
 import utils.Utils as Utils
 import pyttsx3
 from sty import bg, fg
+import logging
 
 
 # initialize AI Voice
@@ -9,6 +11,8 @@ engine = pyttsx3.init()
 
 # initialize Recorder
 recognizer = sr.Recognizer()
+
+logging.basicConfig(filename="results.log", encoding="utf-8", level=logging.INFO)
 
 
 class assistant():
@@ -31,11 +35,12 @@ class assistant():
             print("\n" + "recognized audio: " +
                   bg.green + fg.black + output + bg.rs + fg.rs + "\n")
 
-            # create log request
-
             # functions
             status = Utils.commands(output=output)
             print(status)
+
+            # create log request
+            logging.info(f"Command: {status}, Input: {output}")
 
         except Exception as ex:
             print(ex)
