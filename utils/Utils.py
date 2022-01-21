@@ -40,14 +40,14 @@ def callAction(call):
 
 
 def openBrowser(url):
-    webbrowser.open_new_tab("https://{0}/".format(url))
+    webbrowser.open_new_tab(f"https://{url}")
 
 # open new browser tab with url
 
 
 def openURL(url):
     # announce action
-    callAction("Openning {0}".format(url))
+    callAction(f"Openning {url}")
 
     # open browser
     sleep(1)
@@ -58,7 +58,7 @@ def openURL(url):
 
 def searchWiki(query):
     # announce action
-    callAction("Searching wiki for {0}".format(query))
+    callAction(f"Searching wiki for {query}")
 
     # search wikipedia api for summary
     page = wikipedia.page(query)
@@ -70,7 +70,7 @@ def searchWiki(query):
 
 def get_repositories_from_organization(org):
     # announce action
-    callAction("Searching Github repositories from {0}".format(org))
+    callAction(f"Searching Github repositories from {org}")
 
     # search api for repositories
     url = "https://api.github.com/orgs/" + org + "/repos"
@@ -84,7 +84,7 @@ def get_repositories_from_organization(org):
 
 def calculate(query, operator):
     # announce action
-    callAction("Calculating {0}".format(query))
+    callAction(f"Calculating {query}")
 
 
 # get the lyrics of a song with artist
@@ -92,7 +92,7 @@ def calculate(query, operator):
 
 def getLyrics(song, artist):
     # announce action
-    callAction("Displaying lyrics for {0}".format(song))
+    callAction(f"Displaying lyrics for {song}")
 
     # find lyrics
     lyrics = genius.search_song(song, artist)
@@ -155,9 +155,9 @@ def generatePsw(length):
 
 
 def searchGoogle(searchQuery):
-    callAction("Search google for {0}".format(searchQuery))
+    callAction(f"Search google for {searchQuery}")
 
-    url = "www.google.com/search?q={0}/".format(searchQuery)
+    url = f"www.google.com/search?q={searchQuery}"
 
     sleep(1)
     openBrowser(url=url)
@@ -165,34 +165,50 @@ def searchGoogle(searchQuery):
 # actions for assistant
 
 
-def functions(output):
-    if "open" in output:
-        url = str(output).replace("open ", "")
-        openURL(url=url)
+def commands(output):
+    match output.split(" ")[0]:
 
-    if "what is" in output:
-        query = str(output).replace("what is ", "")
-        searchWiki(query=query)
+        case "open":
+            url = str(output).replace("open ", "")
+            openURL(url=url)
+            return "Success"
 
-    if "get repositories" in output:
-        orga = str(output).replace("get repositories ", "")
-        get_repositories_from_organization(org=orga)
+        case "what":
+            match output.split(" ")[1]:
+                case "is" | "are":
+                    query = str(output).replace("what is ", "")
+                    searchWiki(query=query)
+                    return "Success"
 
-    if "get lyrics" in output:
-        meta = str(output).replace("get lyrics ", "")
-        end = meta.split(" by ")
-        print(bg.blue + str(end) + bg.rs + "\n\n")
-        getLyrics(song=str(end[0]), artist=str(end[1]))
+        case "get":
+            match output.split(" ")[1]:
+                case "repositories":
+                    orga = str(output).replace("get repositories ", "")
+                    get_repositories_from_organization(org=orga)
+                    return "Success"
+                case "lyrics":
+                    meta = str(output).replace("get lyrics ", "")
+                    end = meta.split(" by ")
+                    print(bg.blue + str(end) + bg.rs + "\n\n")
+                    getLyrics(song=str(end[0]), artist=str(end[1]))
+                    return "Success"
 
-    if "get the latest crypto" in output:
-        value = str(output).replace("get the latest crypto ", "")
-        getTopStocks(query=value)
+        case "generate":
+            match output.split(" ")[1]:
+                case "password":
+                    match output.split(" ")[2]:
+                        case "digits":
+                            data = str(output).replace(
+                                "generate password digits ", "")
+                            length = int(data)
+                            generatePsw(length=length)
+                            return "Success"
 
-    if "generate password digits" in output:
-        data = str(output).replace("generate password digits ", "")
-        length = int(data)
-        generatePsw(length=length)
+        case "Google":
+            searchQuery = str(output).replace("Google ", "")
+            searchGoogle(searchQuery=searchQuery)
+            return "Success"
 
-    if "Google" in output:
-        searchQuery = str(output).replace("Google ", "")
-        searchGoogle(searchQuery=searchQuery)
+    sleep(1)
+    callAction("Please repeat, couldn't recognize a command")
+    return "Error"

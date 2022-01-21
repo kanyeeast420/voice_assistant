@@ -34,7 +34,8 @@ class assistant():
             # create log request
 
             # functions
-            Utils.functions(output=output)
+            status = Utils.commands(output=output)
+            print(status)
 
         except Exception as ex:
             print(ex)
