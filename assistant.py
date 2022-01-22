@@ -38,7 +38,7 @@ class assistant():
 
             # functions
             status = Utils.commands(output=output)
-            print(status)
+            # print(status)
 
             # create log request
             logging.info(f"Command: {status}, Input: {output}")

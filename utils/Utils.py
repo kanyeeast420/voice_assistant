@@ -17,6 +17,10 @@ import pyperclip
 # initialize AI Voice
 engine = pyttsx3.init()
 
+# change voice
+voices = engine.getProperty("voices")
+engine.setProperty("voice", voices[2].id)
+
 # initialize Recorder
 recognizer = sr.Recognizer()
 
@@ -164,8 +168,9 @@ def searchGoogle(searchQuery):
 
 # actions for assistant
 
+
 def commands(output):
-    match output.split(" ")[0]: 
+    match output.split(" ")[0]:
 
         case "open":
             url = str(output).replace("open ", "")
