@@ -3,3 +3,5 @@
 utils/__pycache__
 __pycache__/Utils.cpython-310.pyc
 *.log
+*.lwp
+*.log
