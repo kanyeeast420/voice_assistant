@@ -13,7 +13,6 @@ import requests
 import string
 import random
 import pyperclip
-import pywikibot
 
 # initialize AI Voice
 engine = pyttsx3.init()
@@ -165,9 +164,8 @@ def searchGoogle(searchQuery):
 
 # actions for assistant
 
-
 def commands(output):
-    match output.split(" ")[0]:
+    match output.split(" ")[0]: 
 
         case "open":
             url = str(output).replace("open ", "")

@@ -1,4 +1,3 @@
-from fileinput import filename
 import speech_recognition as sr
 import utils.Utils as Utils
 import pyttsx3
@@ -12,7 +11,8 @@ engine = pyttsx3.init()
 # initialize Recorder
 recognizer = sr.Recognizer()
 
-logging.basicConfig(filename="results.log", encoding="utf-8", level=logging.INFO)
+logging.basicConfig(filename="results.log",
+                    encoding="utf-8", level=logging.INFO)
 
 
 class assistant():
@@ -23,6 +23,7 @@ class assistant():
             print(bg.blue + "Adjusting noise..." + bg.rs)
             recognizer.adjust_for_ambient_noise(source, duration=1)
 
+            Utils.callAction("How can I help you?")
             # record microphone for 5 seconds
             print(bg.blue + "Recording for 7 seconds" + bg.rs)
             recorded_audio = recognizer.listen(source, timeout=7)
