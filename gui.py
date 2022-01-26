@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 import sys
-import assistant
 
 
 def window():
@@ -14,7 +13,7 @@ def window():
 
     button = QPushButton(win)
     button.setText("Run assistant")
-    button.clicked(assistant.assistant.go())
+  
 
     # create window
     win.show()

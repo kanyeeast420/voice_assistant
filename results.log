@@ -5,3 +5,5 @@ INFO:root:Command: open, Input: open google.com
 INFO:root:Command: open, Input: open youtube.com
 INFO:root:Command: Error, Input: block
 INFO:root:Command: Error, Input: blob
+INFO:root:Command: Error, Input: song by Me from cine de Botton mama Sean mama new requirements from text editor stuffing
+INFO:root:Command: open, Input: open youtube.com

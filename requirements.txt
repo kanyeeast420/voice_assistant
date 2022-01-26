@@ -1,8 +1,0 @@
-speechrecognition
-pyttsx3
-sty
-wikipedia
-lyricsgenius
-python-dotenv
-pyperclip
-pywikibot
