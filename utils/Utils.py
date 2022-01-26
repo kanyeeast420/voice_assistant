@@ -14,6 +14,7 @@ import string
 import random
 import pyperclip
 import datetime
+import modules.timer as Timer
 
 # initialize AI Voice
 engine = pyttsx3.init()
@@ -171,6 +172,10 @@ def getCurrentTime():
     strTime=datetime.datetime.now().strftime("%H:%M:%S")
     callAction(f"the time is {strTime}")
 
+def createCooldown(time):
+    callAction(f"Creating cooldown for {time} seconds")
+    Timer.countdown(t=time)
+
 # actions for assistant
 
 
@@ -222,6 +227,12 @@ def commands(output):
             searchQuery = str(output).replace("Google ", "")
             searchGoogle(searchQuery=searchQuery)
             return "google"
+
+        case "create":
+            match output.split(" ")[2]:
+                case "countdown":
+                    cooldowntime = str(output).replace("create cooldown ", "")
+                    createCooldown(time=cooldowntime)
 
     time.sleep(1)
     callAction("Please repeat, couldn't recognize a command")
