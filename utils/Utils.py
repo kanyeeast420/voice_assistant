@@ -2,7 +2,7 @@ import speech_recognition as sr
 import webbrowser
 import wikipedia
 import pyttsx3
-from time import sleep
+import time
 import urllib.request
 import json
 import os
@@ -13,6 +13,7 @@ import requests
 import string
 import random
 import pyperclip
+import datetime
 
 # initialize AI Voice
 engine = pyttsx3.init()
@@ -54,7 +55,7 @@ def openURL(url):
     callAction(f"Openning {url}")
 
     # open browser
-    sleep(1)
+    time.sleep(1)
     openBrowser(url=url)
 
 # get a wikipedia page summary by query
@@ -163,8 +164,12 @@ def searchGoogle(searchQuery):
 
     url = f"www.google.com/search?q={searchQuery}"
 
-    sleep(1)
+    time.sleep(1)
     openBrowser(url=url)
+
+def getCurrentTime():
+    strTime=datetime.datetime.now().strftime("%H:%M:%S")
+    callAction(f"the time is {strTime}")
 
 # actions for assistant
 
@@ -183,6 +188,11 @@ def commands(output):
                     query = str(output).replace("what is ", "")
                     searchWiki(query=query)
                     return "what is/are"
+
+                    match output.split(" ")[2]:
+                        case "the time":
+                            getCurrentTime()
+                            return "what is/are the time"
 
         case "get":
             match output.split(" ")[1]:
@@ -213,6 +223,6 @@ def commands(output):
             searchGoogle(searchQuery=searchQuery)
             return "google"
 
-    sleep(1)
+    time.sleep(1)
     callAction("Please repeat, couldn't recognize a command")
     return "Error"
